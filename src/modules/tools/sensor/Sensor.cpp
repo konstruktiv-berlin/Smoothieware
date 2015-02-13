@@ -15,18 +15,23 @@
 #include "libs/ConfigValue.h"
 #include "libs/checksumm.h"
 
-#define    sensor_enable_checksum			CHECKSUM("sensor_enable")
-#define    sensor_input_pin_checksum		CHECKSUM("sensor_input_pin")
-#define    sensor_m_code_checksum			CHECKSUM("sensor_m_code")
-#define    sensor_answer_if_high_checksum	CHECKSUM("sensor_answer_if_high")
-#define    sensor_answer_if_low_checksum	CHECKSUM("sensor_answer_if_low")
+#define    sensor_checksum					CHECKSUM("sensor")
+#define    sensor_input_pin_checksum		CHECKSUM("input_pin")
+#define    sensor_m_code_checksum			CHECKSUM("m_code")
+#define    sensor_answer_if_high_checksum	CHECKSUM("answer_if_high")
+#define    sensor_answer_if_low_checksum	CHECKSUM("answer_if_low")
 
 
+ 
 Sensor::Sensor() {
 }
+ 
 
-Sensor::~Sensor() {
+Sensor::Sensor(uint16_t name)
+{
+	this->name_checksum = name;
 }
+
 
 void Sensor::on_module_loaded() {
 	// THEKERNEL->streams->printf("DEBUG:SENSOR: Module loaded\n");
@@ -40,16 +45,10 @@ void Sensor::on_module_loaded() {
 
 void Sensor::on_config_reload(void* argument)
 {
-	/* free space if not loaded */
-	if (!THEKERNEL->config->value(sensor_enable_checksum)->by_default(false)->as_bool()) {
-		delete this;
-		return;
-	}
-
-	this->sensor_pin.from_string(  THEKERNEL->config->value(sensor_input_pin_checksum)->by_default("nc" )->as_string() )->as_input()->pull_down();
-	this->m_code = THEKERNEL->config->value( sensor_m_code_checksum )->by_default(-1)->as_int();
-	this->answer_if_high = THEKERNEL->config->value( sensor_answer_if_high_checksum )->by_default("")->as_string();
-	this->answer_if_low = THEKERNEL->config->value( sensor_answer_if_low_checksum )->by_default("")->as_string();
+	this->sensor_pin.from_string(  THEKERNEL->config->value( sensor_checksum, this->name_checksum, sensor_input_pin_checksum)->by_default("nc" )->as_string() )->as_input()->pull_down();
+	this->m_code = THEKERNEL->config->value( sensor_checksum, this->name_checksum, sensor_m_code_checksum )->by_default(-1)->as_int();
+	this->answer_if_high = THEKERNEL->config->value( sensor_checksum, this->name_checksum, sensor_answer_if_high_checksum )->by_default("")->as_string();
+	this->answer_if_low = THEKERNEL->config->value( sensor_checksum, this->name_checksum, sensor_answer_if_low_checksum )->by_default("")->as_string();
 }
 
 

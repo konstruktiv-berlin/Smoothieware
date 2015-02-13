@@ -169,13 +169,19 @@ temperature_control.bed.designator           B                #
 #temperature_control.bed.bang_bang            false           # set to true to use bang bang control rather than PID
 #temperature_control.bed.hysteresis           2.0             # set to the temperature in degrees C to use as hysteresis
                                                               # when using bang bang
-# Sensor module: querry via Mxxx simple on / off sensors states
-sensor_enable                                true             # use sensor
-sensor_input_pin                             1.22             # which pin to use
-sensor_m_code                                700              # which M-command to listen to, e.g. M700
-sensor_answer_if_high                        M700=1           # string sended back to host if s1 pin high
-sensor_answer_if_low                         M700=0           # string sended back to host if s1 pin is low
- 
+# Sensor module: query via Mxxx simple on / off sensors states
+sensor.s1.enable                              true             # use sensor
+sensor.s1.input_pin                           1.22             # which pin to use
+sensor.s1.m_code                              710              # which M-command to listen to, e.g. M700
+sensor.s1.answer_if_high                      M710=1           # string sended back to host if s1 pin high
+sensor.s1.answer_if_low                       M710=0           # string sended back to host if s1 pin is low
+
+sensor.s2.enable                              true             # use sensor
+sensor.s2.input_pin                           1.23             # which pin to use
+sensor.s2.m_code                              711              # which M-command to listen to, e.g. M700
+sensor.s2.answer_if_high                      M711=1           # string sended back to host if s1 pin high
+sensor.s2.answer_if_low                       M711=0           # string sended back to host if s1 pin is low
+
 # Switch module for fan control
 switch.fan.enable                            true             #
 switch.fan.input_on_command                  M106             #

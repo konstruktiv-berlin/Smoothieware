@@ -16,7 +16,7 @@
 #include "modules/tools/scaracal/SCARAcal.h"
 #include "modules/tools/switch/SwitchPool.h"
 #include "modules/tools/temperatureswitch/TemperatureSwitch.h"
-#include "modules/tools/sensor/Sensor.h"
+#include "modules/tools/sensor/SensorPool.h"
 
 #include "modules/robot/Conveyor.h"
 #include "modules/utils/simpleshell/SimpleShell.h"
@@ -173,7 +173,9 @@ void init() {
     kernel->add_module( new TemperatureSwitch() );
     #endif
     #ifndef NO_TOOLS_SENSOR
-    kernel->add_module(new Sensor() );
+    SensorPool *sensorpool= new SensorPool();
+    sensorpool->load_tools();
+    delete sensorpool;
     #endif
     // Create and initialize USB stuff
     u.init();

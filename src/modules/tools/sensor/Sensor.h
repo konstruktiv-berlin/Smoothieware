@@ -16,16 +16,17 @@
 class Sensor : public Module {
 public:
 	Sensor();
-	virtual ~Sensor();
+	Sensor(uint16_t name);
 
-    void on_module_loaded();
-    void on_config_reload(void* argument);
-    void on_gcode_received(void *argument);
-    void on_gcode_execute(void* argument);
+	void on_module_loaded();
+	void on_config_reload(void* argument);
+	void on_gcode_received(void *argument);
+	void on_gcode_execute(void* argument);
 
 private:
-    Pin sensor_pin;
-    int m_code;
+	uint16_t  name_checksum;
+	Pin sensor_pin;
+	int m_code;
 	std::string answer_if_high;
 	std::string answer_if_low;
 };
