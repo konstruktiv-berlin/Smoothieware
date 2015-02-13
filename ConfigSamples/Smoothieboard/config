@@ -169,7 +169,13 @@ temperature_control.bed.designator           B                #
 #temperature_control.bed.bang_bang            false           # set to true to use bang bang control rather than PID
 #temperature_control.bed.hysteresis           2.0             # set to the temperature in degrees C to use as hysteresis
                                                               # when using bang bang
-
+# Sensor module: querry via Mxxx simple on / off sensors states
+sensor_enable                                true             # use sensor
+sensor_input_pin                             1.22             # which pin to use
+sensor_m_code                                700              # which M-command to listen to, e.g. M700
+sensor_answer_if_high                        M700=1           # string sended back to host if s1 pin high
+sensor_answer_if_low                         M700=0           # string sended back to host if s1 pin is low
+ 
 # Switch module for fan control
 switch.fan.enable                            true             #
 switch.fan.input_on_command                  M106             #

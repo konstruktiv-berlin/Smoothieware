@@ -19,11 +19,15 @@ public:
 	virtual ~Sensor();
 
     void on_module_loaded();
+    void on_config_reload(void* argument);
     void on_gcode_received(void *argument);
     void on_gcode_execute(void* argument);
 
 private:
     Pin sensor_pin;
+    int m_code;
+	std::string answer_if_high;
+	std::string answer_if_low;
 };
 
 #endif /* SRC_MODULES_TOOLS_SENSOR_SENSOR_H_ */
