@@ -45,7 +45,7 @@ void Sensor::on_module_loaded() {
 
 void Sensor::on_config_reload(void* argument)
 {
-	this->sensor_pin.from_string(  THEKERNEL->config->value( sensor_checksum, this->name_checksum, sensor_input_pin_checksum)->by_default("nc" )->as_string() )->as_input()->pull_down();
+	this->sensor_pin.from_string(  THEKERNEL->config->value( sensor_checksum, this->name_checksum, sensor_input_pin_checksum)->by_default("nc" )->as_string() )->as_input();
 	this->m_code = THEKERNEL->config->value( sensor_checksum, this->name_checksum, sensor_m_code_checksum )->by_default(-1)->as_int();
 	this->answer_if_high = THEKERNEL->config->value( sensor_checksum, this->name_checksum, sensor_answer_if_high_checksum )->by_default("")->as_string();
 	this->answer_if_low = THEKERNEL->config->value( sensor_checksum, this->name_checksum, sensor_answer_if_low_checksum )->by_default("")->as_string();
