@@ -22,6 +22,7 @@ using namespace std;
 #include "Config.h"
 #include "libs/StreamOutputPool.h"
 #include "ConfigValue.h"
+#include "Stepper.h"
 
 #define planner_queue_size_checksum CHECKSUM("planner_queue_size")
 
@@ -159,6 +160,8 @@ void Conveyor::on_block_end(void* block)
     if (gc_pending == queue.head_i)
     {
         running = false;
+        /* turn steppers off  if queue is empty */
+        THEKERNEL->stepper->turn_enable_pins_off();
         return;
     }
 
@@ -207,6 +210,10 @@ void Conveyor::ensure_running()
             return;
 
         running = true;
+        /* enable stepper driver - wait 1ms */
+        THEKERNEL->stepper->turn_enable_pins_on();
+        wait_ms(1);
+
         queue.item_ref(gc_pending)->begin();
     }
 }

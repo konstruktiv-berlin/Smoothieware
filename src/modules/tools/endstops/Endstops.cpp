@@ -640,6 +640,8 @@ void Endstops::on_gcode_received(void *argument)
 
             // if limit switches are enabled we must back off endstop after setting home
             back_off_home(axes_to_move);
+            // Disable the motors - avoid overheating
+            THEKERNEL->stepper->turn_enable_pins_off();
         }
 
     } else if (gcode->has_m) {
@@ -742,6 +744,8 @@ void Endstops::on_gcode_received(void *argument)
                 }
                 gcode->stream->printf("Moved X %d Y %d Z %d F %d steps\n", x, y, z, f);
                 gcode->mark_as_taken();
+                // Disable the motors - avoid overheating
+                THEKERNEL->stepper->turn_enable_pins_off();
                 break;
             }
         }
